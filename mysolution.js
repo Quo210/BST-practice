@@ -143,7 +143,34 @@ class Tree {
         print += ' ' + ref.data;
         storage.shift()
         return this.recurseLvlOr(storage,print);
-    }
+    };
+    preOrder(root = this.root,storage = []){
+        if(root == null){
+            return storage
+        };
+        storage.push(root.data);
+        this.preOrder(root.left,storage);
+        this.preOrder(root.right,storage);
+        return storage
+    };
+    inOrder(root = this.root,storage = []){
+        if(root == null){
+            return storage
+        };
+        this.inOrder(root.left,storage);
+        storage.push(root.data);
+        this.inOrder(root.right,storage);
+        return storage
+    };
+    postOrder(root = this.root,storage = []){
+        if(root == null){
+            return storage
+        };
+        this.postOrder(root.left,storage);
+        this.postOrder(root.right,storage);
+        storage.push(root.data);
+        return storage
+    };
 };
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node.right !== null) {
@@ -158,11 +185,14 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 var ara = [1, 2, 3, 4, 5, 6, 7,123,11,15,23,123,123,121,1,2,5,9,10,22,89,74,21,1040];
 const myTree = new Tree(ara);
 //myTree.insert(myTree.root,67)
-//myTree.deleteNum(myTree.root,4)
+myTree.deleteNum(myTree.root,4)
 //myTree.deleteNum(myTree.root,89)
 //myTree.deleteNum(myTree.root,123)
 //myTree.deleteNum(myTree.root,7)
 //console.log(myTree.findNum(26))
 //console.log(myTree.levelOrder(console.log))
 //console.log(myTree.recurseLvlOr())
+console.log('PreOrder',myTree.preOrder())
+console.log('inOrder',myTree.inOrder())
+console.log('postOrder',myTree.postOrder())
 prettyPrint(myTree.root);
