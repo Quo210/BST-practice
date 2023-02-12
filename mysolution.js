@@ -114,17 +114,34 @@ class Tree {
             return false
         }
     };
-    levelOrder(root){
+    levelOrder(){
         const traversal = [];
-        const queue = [root];
+        const queue = [this.root];
         while (queue.length != 0){
             const ref = queue[0];
             traversal.push(ref.data);
                 if(ref.left != null){ queue.push(ref.left) }
-                if (ref.right != null){ queue.push(ref.right) }
+                if(ref.right != null){ queue.push(ref.right) }
                 queue.shift()
         };
         return traversal
+    };
+    recurseLvlOr(storage = [this.root], print = ''){
+        const ref = (storage.length > 0)? storage[0] : null;
+        switch(true){
+            case (ref == null):
+                return print;
+                break;
+            case (ref.left != null):
+                storage.push(ref.left);      
+            case (ref.right != null):
+                storage.push(ref.right);
+            default:
+                'Wut'
+        };
+        print += ' ' + ref.data;
+        storage.shift()
+        return this.recurseLvlOr(storage,print);
     }
 };
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -145,5 +162,6 @@ const myTree = new Tree(ara);
 //myTree.deleteNum(myTree.root,123)
 //myTree.deleteNum(myTree.root,7)
 //console.log(myTree.findNum(26))
-console.log(myTree.levelOrder(myTree.root))
+//console.log(myTree.levelOrder())
+console.log(myTree.recurseLvlOr())
 prettyPrint(myTree.root);
