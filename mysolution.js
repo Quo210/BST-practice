@@ -97,6 +97,22 @@ class Tree {
             root = root.left;
         } 
         return succesor
+    };
+    findNum(num,root = this.root){
+        console.log('Searching',num,'on',root)
+        if(root == null){
+            console.log('NOT FOUND')
+            return num
+        };
+        if(num < root.data){
+            return this.findNum(num,root.left)
+        } else if (num > root.data){
+            return this.findNum(num,root.right)
+        } else if (num == root.data) {
+            return root
+        } else {
+            return false
+        }
     }
 };
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -115,5 +131,6 @@ const myTree = new Tree(ara);
 //myTree.deleteNum(myTree.root,4)
 //myTree.deleteNum(myTree.root,89)
 //myTree.deleteNum(myTree.root,123)
-myTree.deleteNum(myTree.root,7)
-prettyPrint(myTree.root);
+//myTree.deleteNum(myTree.root,7)
+console.log(myTree.findNum(26))
+//prettyPrint(myTree.root);
