@@ -114,12 +114,13 @@ class Tree {
             return false
         }
     };
-    levelOrder(){
+    levelOrder(func){
         const traversal = [];
         const queue = [this.root];
         while (queue.length != 0){
             const ref = queue[0];
             traversal.push(ref.data);
+            if(func != undefined){ func(ref.data )}
                 if(ref.left != null){ queue.push(ref.left) }
                 if(ref.right != null){ queue.push(ref.right) }
                 queue.shift()
@@ -162,6 +163,6 @@ const myTree = new Tree(ara);
 //myTree.deleteNum(myTree.root,123)
 //myTree.deleteNum(myTree.root,7)
 //console.log(myTree.findNum(26))
-//console.log(myTree.levelOrder())
-console.log(myTree.recurseLvlOr())
+//console.log(myTree.levelOrder(console.log))
+//console.log(myTree.recurseLvlOr())
 prettyPrint(myTree.root);
