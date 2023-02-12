@@ -113,6 +113,18 @@ class Tree {
         } else {
             return false
         }
+    };
+    levelOrder(root){
+        const traversal = [];
+        const queue = [root];
+        while (queue.length != 0){
+            const ref = queue[0];
+            traversal.push(ref.data);
+                if(ref.left != null){ queue.push(ref.left) }
+                if (ref.right != null){ queue.push(ref.right) }
+                queue.shift()
+        };
+        return traversal
     }
 };
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -132,5 +144,6 @@ const myTree = new Tree(ara);
 //myTree.deleteNum(myTree.root,89)
 //myTree.deleteNum(myTree.root,123)
 //myTree.deleteNum(myTree.root,7)
-console.log(myTree.findNum(26))
-//prettyPrint(myTree.root);
+//console.log(myTree.findNum(26))
+console.log(myTree.levelOrder(myTree.root))
+prettyPrint(myTree.root);
