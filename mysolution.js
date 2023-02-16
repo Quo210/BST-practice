@@ -102,7 +102,7 @@ class Tree {
         console.log('Searching',num,'on',root)
         if(root == null){
             console.log('NOT FOUND')
-            return num
+            return root
         };
         if(num < root.data){
             return this.findNum(num,root.left)
@@ -171,7 +171,31 @@ class Tree {
         storage.push(root.data);
         return storage
     };
-};
+    height(node = this.root){//find the height of a node in the tree
+        if (node == null){
+            return -1
+        }
+        let leftH = this.height(node.left);
+        let rightH = this.height(node.right);
+        return Math.max(leftH,rightH) + 1
+    };
+    findDepth(nodeNum){
+        const find = this.findNum(nodeNum);
+        const value = (find)? find.data : null;
+        if (!value){ return `${nodeNum} NOT FOUND`};
+        let pointer = this.root;
+        let depth = 0;
+        while(pointer != null && pointer.data != value){
+            if(value < pointer.data){
+                pointer = pointer.left;
+                depth++
+            } else if (value > pointer.data) {
+                pointer = pointer.right;
+                depth++;
+            } else return depth
+        }
+        return `Depth for ${nodeNum} is: ` + depth
+    }};
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node.right !== null) {
       prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
@@ -182,17 +206,19 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 };
 //const ara = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-var ara = [1, 2, 3, 4, 5, 6, 7,123,11,15,23,123,123,121,1,2,5,9,10,22,89,74,21,1040];
+var ara = [1, 2, 3, 4, 5, 6, 7,123,11,15,23,123,123,121,1,2,5,9,10,22,89,74,21,1040,1041,2000];
 const myTree = new Tree(ara);
 //myTree.insert(myTree.root,67)
-myTree.deleteNum(myTree.root,4)
+//myTree.deleteNum(myTree.root,4)
 //myTree.deleteNum(myTree.root,89)
 //myTree.deleteNum(myTree.root,123)
 //myTree.deleteNum(myTree.root,7)
 //console.log(myTree.findNum(26))
 //console.log(myTree.levelOrder(console.log))
 //console.log(myTree.recurseLvlOr())
-console.log('PreOrder',myTree.preOrder())
-console.log('inOrder',myTree.inOrder())
-console.log('postOrder',myTree.postOrder())
+// console.log('PreOrder',myTree.preOrder())
+// console.log('inOrder',myTree.inOrder())
+// console.log('postOrder',myTree.postOrder())
+console.log(myTree.findNum(7))
+console.log(myTree.findDepth(15))
 prettyPrint(myTree.root);
