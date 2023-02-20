@@ -27,15 +27,15 @@ class Tree {
     };
     insert(root,key){
         if (root == null){
-            console.log(key,'a new node was created due to ', root)
+            //console.log(key,'a new node was created due to ', root)
             root = new Node(key);
             return root
         };
         if(key < root.data){
-            console.log(key,'key is Lower ',root.data)
+            //console.log(key,'key is Lower ',root.data)
             root.left = this.insert(root.left,key);
         } else if(key > root.data){
-            console.log(key,'key is bigger ',root.data)
+            //console.log(key,'key is bigger ',root.data)
             root.right = this.insert(root.right,key);
         } else {//If key == root.data
             console.error('Can not have duplicate values.')
@@ -120,7 +120,7 @@ class Tree {
         while (queue.length != 0){
             const ref = queue[0];
             traversal.push(ref.data);
-            if(func != undefined){ func(ref.data )}
+            if(func != undefined){ func(ref) }
                 if(ref.left != null){ queue.push(ref.left) }
                 if(ref.right != null){ queue.push(ref.right) }
                 queue.shift()
@@ -195,7 +195,43 @@ class Tree {
             } else return depth
         }
         return `Depth for ${nodeNum} is: ` + depth
-    }};
+    }
+    isBalanced(){
+        let status = true;
+        this.levelOrder((node,status)=>{
+            if(node == null){
+                //do nothing
+            } else {
+                let left = this.height(node.left);
+                let right = this.height(node.left);
+                if(left > right){
+                    if( (left - right) > 1) status = false;
+                } else if (left < right){
+                    if( (right - left) > 1) status = false;
+                } else {//They equal
+                    true
+                }
+            }
+        });
+        return 'is balanced?: ' + status 
+    };
+
+
+};
+
+function makeRandoNumArr(num){
+    if (num > 200){
+        num = 200
+    };
+    const store = [];
+    for (let i = 0; i < num; i++){
+        store.push(
+            Math.floor( Math.random() * 1000) + 1 
+        );
+    }
+    return store
+}
+    
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node.right !== null) {
       prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
@@ -205,10 +241,16 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
 };
-//const ara = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+//const ara = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,7000,8000,9000,14,99,33,55,20,13,14,19];
 var ara = [1, 2, 3, 4, 5, 6, 7,123,11,15,23,123,123,121,1,2,5,9,10,22,89,74,21,1040,1041,2000];
+//const ara = makeRandoNumArr(200);
 const myTree = new Tree(ara);
-//myTree.insert(myTree.root,67)
+myTree.insert(myTree.root,67)
+myTree.insert(myTree.root,68)
+myTree.insert(myTree.root,71)
+myTree.insert(myTree.root,72)
+myTree.insert(myTree.root,73)
+myTree.insert(myTree.root,75)
 //myTree.deleteNum(myTree.root,4)
 //myTree.deleteNum(myTree.root,89)
 //myTree.deleteNum(myTree.root,123)
@@ -219,6 +261,7 @@ const myTree = new Tree(ara);
 // console.log('PreOrder',myTree.preOrder())
 // console.log('inOrder',myTree.inOrder())
 // console.log('postOrder',myTree.postOrder())
-console.log(myTree.findNum(7))
-console.log(myTree.findDepth(15))
+//console.log(myTree.findNum(7))
+//console.log(myTree.findDepth(15))
+console.log( myTree.isBalanced() )
 prettyPrint(myTree.root);
